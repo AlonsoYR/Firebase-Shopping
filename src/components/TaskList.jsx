@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { addNewTask, deleteTask, getTasks, updateTask } from '../firebase/taskController';
+import { AppContext } from '../App';
 
 const task = {
     title: 'Titulo',
@@ -12,6 +13,8 @@ const TaskList = () => {
     const [task, setTask] = useState({ title: "", description:"" });
     const [tasks, setTasks] = useState([]);
     const [mode, setMode] = useState('add');
+
+    const {user} = useContext(AppContext);
 
     const createNewTask = async () => {
         await addNewTask(task);
@@ -57,6 +60,7 @@ const TaskList = () => {
                 value={task.title} 
                 placeholder='Título' 
                 className='border shadow outline-none focus:ring ring-sky-200 rounded px-2 py-1 w-full' 
+                disabled={!user} 
                 onChange={e => setTask({...task, title: e.target.value})}
             />
             <textarea 
@@ -65,15 +69,17 @@ const TaskList = () => {
                 value={task.description} 
                 placeholder='Descripción' 
                 className='border shadow outline-none focus:ring ring-sky-200 rounded px-2 py-1 w-full' 
+                disabled={!user} 
                 onChange={e => setTask({...task, description: e.target.value})}
             />
             <button 
-                className='bg-sky-400 text-white rounded shadow py-1 hover:bg-sky-500 transition font-semibold'
+                className='bg-sky-400 text-white rounded shadow py-1 hover:bg-sky-500 transition font-semibold disabled:bg-sky-200'
+                disabled={!user} 
                 onClick={() => mode === 'add' ? createNewTask() : updateExistingTask()}
             >
                 {mode === 'add' ? 'Añadir' : 'Actualizar'}   
             </button>
-
+            </div>
             <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mt-4'>
                 {tasks.map((task) => (
                     <div
@@ -96,7 +102,11 @@ const TaskList = () => {
                     </div>
                 ))}
             </div>
-        </div>
+        {!user && (
+        <p className='text-red-600'>
+            Necesita estar Logeado para añadir nueva tarea
+        </p>
+        )}
     </div>
     
   )
