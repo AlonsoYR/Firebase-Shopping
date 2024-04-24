@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components{
+    .btn-submit {
+        @apply bg-sky-400 py-1 text-white rounded shadow
+    }
+}

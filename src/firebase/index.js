@@ -5,7 +5,7 @@ import { initializeApp } from "firebase/app";
 import { getMessaging, getToken } from "firebase/messaging";
 import { getFirestore } from "firebase/firestore";
 
-const vapidKey = "BIWrIdGxrfimfaZi0T5w3vSbBiQHItL893SVhNQp_aAXO3kRaHeIvYy-sQffM332JEzlXPIHa5hns50bl3ZxngI"
+
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -17,10 +17,32 @@ const firebaseConfig = {
   appId: "1:740508353124:web:fab6d57c3fa9f4bbcb1571"
 };
 
+const devFirebaseConfig = {
+  apiKey: "AIzaSyBsNSA-71Sz_AmZLvefGJmZTO186Q59ORc",
+  authDomain: "dev-firebase-shopping-36675.firebaseapp.com",
+  projectId: "dev-firebase-shopping-36675",
+  storageBucket: "dev-firebase-shopping-36675.appspot.com",
+  messagingSenderId: "629548094481",
+  appId: "1:629548094481:web:3ab11fde9a246a52950db0"
+}
+
 // Initialize Firebase
-export const app = initializeApp(firebaseConfig);
+let app;
+if (process.env.NODE_ENV === "production"){
+  app = initializeApp(firebaseConfig);
+} else {
+  app = initializeApp(devFirebaseConfig);
+}
+
+export {app}
+
 export const messaging = getMessaging();
-getToken(messaging, { vapidKey }).then((currentToken) => {
+
+const vapidKeyProd = "BIWrIdGxrfimfaZi0T5w3vSbBiQHItL893SVhNQp_aAXO3kRaHeIvYy-sQffM332JEzlXPIHa5hns50bl3ZxngI";
+const vapidKeyDev = "BFXYCp1qiVhdcKMz6--_mVU-jbejSi-pMnJs2v_bcChD8qbo3VjqwOFkmH_73rgCd_pW6sg5kzl0mwh5lS2hY4I";
+
+getToken(messaging, { vapidKey: process.env.NODE_ENV === 'production' ? vapidKeyProd : vapidKeyDev })
+  .then((currentToken) => {
   if (currentToken) {
     // Send the token to your server and update the UI if necessary
     // ...

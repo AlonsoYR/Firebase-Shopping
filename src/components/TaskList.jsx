@@ -59,7 +59,7 @@ const TaskList = () => {
                 type='text' 
                 value={task.title} 
                 placeholder='Título' 
-                className='border shadow outline-none focus:ring ring-sky-200 rounded px-2 py-1 w-full' 
+                className='input-title border shadow outline-none focus:ring ring-sky-200 rounded px-2 py-1 w-full' 
                 disabled={!user} 
                 onChange={e => setTask({...task, title: e.target.value})}
             />
@@ -68,12 +68,12 @@ const TaskList = () => {
                 rows={3} 
                 value={task.description} 
                 placeholder='Descripción' 
-                className='border shadow outline-none focus:ring ring-sky-200 rounded px-2 py-1 w-full' 
+                className='input-description border shadow outline-none focus:ring ring-sky-200 rounded px-2 py-1 w-full' 
                 disabled={!user} 
                 onChange={e => setTask({...task, description: e.target.value})}
             />
             <button 
-                className='bg-sky-400 text-white rounded shadow py-1 hover:bg-sky-500 transition font-semibold disabled:bg-sky-200'
+                className='btn-submit'
                 disabled={!user} 
                 onClick={() => mode === 'add' ? createNewTask() : updateExistingTask()}
             >

@@ -14,7 +14,7 @@ const Footer = () => {
         <div className='bg-sky-200 p-2 text-3xl rounded-full text-amber-700 cursor-pointer hover:bg-sky-50 transition' onClick={() => setRoute('shopping')}>
             <TiShoppingCart />
         </div>
-        <div className='bg-sky-200 p-2 text-3xl rounded-full text-amber-700 cursor-pointer hover:bg-sky-50 transition' onClick={() => setRoute('tasklist')}>
+        <div className='list-route bg-sky-200 p-2 text-3xl rounded-full text-amber-700 cursor-pointer hover:bg-sky-50 transition' onClick={() => setRoute('tasklist')}>
             <BsList />
         </div>
     </footer>
